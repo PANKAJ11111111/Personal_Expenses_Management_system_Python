@@ -1,7 +1,19 @@
+import os
+import user_class as p
+
 # here main login of code prasent
 
 def register():
-    print("here we implement code for registration")
+    os.system('cls')
+    print()
+    print(" Hello Welocome To Personal Expenses Managment System Registration Page ".center(100,"="))
+    print()
+    
+    user1 = p.user()
+    
+    print()
+
+
 
 def login():
     print("code for Login ")
@@ -38,3 +50,4 @@ else:
     print()
     print("Soory! You Enter Invalid Option.")
     print()
+
