@@ -19,3 +19,5 @@ class user:
         print("User Salary = ", self.user_salary)
         print("User Contect No. = ", self.user_mobile)
         print("User Monthly Expenses Target = ", self.user_Target)
+
+        

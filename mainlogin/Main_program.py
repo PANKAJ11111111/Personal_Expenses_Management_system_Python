@@ -4,19 +4,29 @@ import user_class as p
 # here main login of code prasent
 
 def register():
-    os.system('cls')
-    print()
-    print(" Hello Welocome To Personal Expenses Managment System Registration Page ".center(100,"="))
-    print()
-    
-    user1 = p.user()
-    
+    os.system('cls') 
+    print(" Hello Welocome To Personal Expenses Managment System Registration ".center(100,"="))
     print()
 
+    user1 = p.user()
+    print()
+   
+    # Construct the file path
+    base_dir = os.path.dirname(__file__)  # Directory of the current script
+    
+    file_path = os.path.join(base_dir, '..', 'userdatabase', 'userdata.txt')
+    print(file_path)
+    
+    # Ensure the directory exists
+    os.makedirs(os.path.dirname(file_path), exist_ok=True)
+
+    
+    
 
 
 def login():
     print("code for Login ")
+
 
 def exit():
     print()
