@@ -10,6 +10,8 @@ def logoutcode(login_user):
     print()
     print("Thank you {} for using Personal Expense Tracker. ✨ Goodbye! ✨".center(100," ").format(login_user.user_name))
     print()
+    print()
+   
 
 
 def menushow(user):

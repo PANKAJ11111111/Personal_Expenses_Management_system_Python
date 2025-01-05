@@ -31,15 +31,15 @@ def register():
 
     pickle.dump(user1,file)
 
-    newdire = os.path.join(base_dir,'..','userdatabase',user1.user_email)
-    
-    os.makedirs(newdire)
-
     file.close()
     
     os.system('cls')
     print('Registration successful!')
     print('Now Login..')
+
+    newdire = os.path.join(base_dir,'..','userdatabase',user1.user_email)
+    
+    os.makedirs(newdire)
 
     intro()
 
@@ -96,7 +96,7 @@ def exit():
 
 # fuction to show welcome
 def intro():
-    os.system('cls') 
+
     print()
     # welcome greet
     print(" Hello Welocome To Personal Expenses Managment System ".center(100,"="))
@@ -112,7 +112,7 @@ def intro():
 
     # login for handle choise
     if(userchoise == 1):
-       register()
+      register()
 
     elif(userchoise == 2):
       login()
@@ -122,13 +122,16 @@ def intro():
 
     else:
      print()
-     print("Soory! You Enter Invalid Option 😵😵 .")
+     print("Soory! You Enter Invalid Option 😵 😵 .")
      print()
+     intro()
+     
 
    
 
 
 # code exection start from here
+os.system('cls')
 intro()
 
 
