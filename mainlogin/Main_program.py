@@ -1,17 +1,20 @@
+#import all essential module
 import os
 import user_class as p
 import pickle
 import datetime
+import menu as m
 
 # here main login of code prasent
 
 
-
+# fuction for Registration
 def register():
     os.system('cls') 
     print(" Hello Welocome To Personal Expenses Managment System Registration ".center(100,"="))
     print()
-
+    
+    # create user object
     user1 = p.user()
     print()
    
@@ -27,6 +30,11 @@ def register():
     file = open(file_path,'ab')
 
     pickle.dump(user1,file)
+
+    newdire = os.path.join(base_dir,'..','userdatabase',user1.user_email)
+    
+    os.makedirs(newdire)
+
     file.close()
     
     os.system('cls')
@@ -36,6 +44,7 @@ def register():
     intro()
 
 
+# fuction for Login user
 def login():
     os.system('cls') 
     print()
@@ -57,9 +66,8 @@ def login():
         if(useremail.lower() == data1.user_email.lower()):
           if(userpassword == data1.user_password):
              print()
-             print("Hello {}! It's always a pleasure to assist you. ❤️".format(data1.user_name)) 
-             print("Let’s get started on keeping your finances organized and stress-free")
-             print()
+             os.system('cls')
+             m.menushow(data1)
              break
           else:
              os.system('cls')
@@ -79,21 +87,22 @@ def login():
        
     
 
-
+# function for exit
 def exit():
     print()
     print("Thank you for using Personal Expense Tracker. ✨ Goodbye! ✨".center(100," "))
     print()
 
 
+# fuction to show welcome
 def intro():
+    os.system('cls') 
     print()
     # welcome greet
     print(" Hello Welocome To Personal Expenses Managment System ".center(100,"="))
     print()
 
-     # option
-
+    # option
     print('1. Register ')
     print('2. Login ')
     print('3. Exit')
@@ -101,6 +110,7 @@ def intro():
     #userchoise variable store user choise
     userchoise = int(input('Enter Your Choise (1/2/3): '))
 
+    # login for handle choise
     if(userchoise == 1):
        register()
 
@@ -117,6 +127,8 @@ def intro():
 
    
 
+
+# code exection start from here
 intro()
 
 
