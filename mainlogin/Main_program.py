@@ -37,7 +37,7 @@ def register():
     print('Registration successful!')
     print('Now Login..')
 
-    newdire = os.path.join(base_dir,'..','userdatabase',user1.user_email)
+    newdire = os.path.join(base_dir,'..','userdatabase',user1.user_email.lower())
     
     os.makedirs(newdire)
 
@@ -125,6 +125,7 @@ def intro():
      print("Soory! You Enter Invalid Option 😵 😵 .")
      print()
      intro()
+     
      
 
    

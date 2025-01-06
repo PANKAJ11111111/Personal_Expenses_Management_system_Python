@@ -1,6 +1,70 @@
 import os
+import expense_class as e
+import datetime
+import pickle
 
 login_user = None
+
+def add_expenses(login_user):
+    os.system('cls')
+    print()
+    print(" Personal Expenses Managment System  ".center(100,"="))
+    print()
+
+    print()
+    print("Hy {} its Time to log your latest spending! ❤️".format(login_user.user_name))
+    print("Enter the details to keep your budget updated...")
+    print("----------------------------------------------------")
+    print()
+
+    user_folder = os.getcwd()
+    user_folder = os.path.join(user_folder,'userdatabase',login_user.user_email.lower())
+    
+    expens = e.expense()
+    
+    date_e = expens.e_date
+    date_e = date_e.split('-')
+    file_month = 'expense_of_' + date_e[1] + "_" + date_e[2]+'.txt'
+
+    month_file = os.path.join(user_folder, file_month)
+    
+    if(os.path.isfile(month_file)):
+        file = open(month_file,'ab')
+        pickle.dump(expens,file)
+        file.close()
+        print()
+        print(" ✔️  Expense added successfully!  ✔️".center(100," "))
+        c = int(input("For <- Back Press 1: "))
+
+        if c == 1:
+            os.system('cls')
+            menushow(login_user)
+        else:
+            print()
+            print("Soory! You Enter Invalid Option 😵 😵 .")
+            print("Log out .....")
+            print()
+        print()
+    
+    else:
+
+        file = open(month_file,'ab')
+        pickle.dump(expens,file)
+        file.close()
+        print()
+        print("Expense added successfully!".center(100," "))
+        c = int(input("For <- Back Press 1: "))
+
+        if c == 1:
+            os.system('cls')
+            menushow(login_user)
+        else:
+            print()
+            print("Soory! You Enter Invalid Option 😵 😵 .")
+            print("Log out .....")
+            print()
+        print()
+        
 
     
 def logoutcode(login_user):
@@ -10,7 +74,10 @@ def logoutcode(login_user):
     print()
     print("Thank you {} for using Personal Expense Tracker. ✨ Goodbye! ✨".center(100," ").format(login_user.user_name))
     print()
+    print("Log Out.....")
     print()
+    print()
+
    
 
 
@@ -35,7 +102,7 @@ def menushow(user):
     user_choise = int(input("Enter your choice (1-6): "))
 
     if user_choise == 1:
-        print("code for add expenses")
+        add_expenses(login_user)
     
     elif user_choise == 2:
         print("code for view expenses")
