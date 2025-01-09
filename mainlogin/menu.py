@@ -12,7 +12,7 @@ def getmonth(num):
     if num == '01':
         return 'January'
     elif num == '02':
-        return 'Fedrua'
+        return 'February'
     elif num == '03':
         return 'March'
     elif num == '04':
@@ -147,9 +147,9 @@ def view_expence(login_user):
             month_str = getmonth(month)
             year = month_sep[3].split('.')
 
-            print("-----------------------------------------------------------")
-            print("Month: {} {}".format(month_str,year[0]))
-            print("-----------------------------------------------------------")
+            print("-".center(100,'-'))
+            print("\033[31mMonth: {} {}\033[0m".format(month_str,year[0]).center(100,' '))
+            print("-".center(100,'-'))
             
             
             current_open_file = open(month_file,'rb')
@@ -158,6 +158,7 @@ def view_expence(login_user):
               
               i = 1
               total =0
+              print()
               for _ in range(1000):
                   
                   current_e = pickle.load(current_open_file)
@@ -184,12 +185,15 @@ def view_expence(login_user):
                 continue
 
         print()
+        print("-----------------------------------------------------------")
+        print()
         print(" ✔️  View Expenses successfully!  ✔️".center(100," "))
         c = int(input("For <- Back Press 1: "))
 
         if c == 1:
          os.system('cls')
          menushow(login_user)
+         return
         else:
               print()
               os.system('cls')
@@ -228,13 +232,15 @@ def view_expence(login_user):
 
         
             print()
-            print("===== All Expenses Of {} =====".format(mstring))
+            print("===== All Expenses Of \033[31m{}\033[0m =====".format(mstring))
             print()
+            print("-".center(100,'-'))
             
             try:
              current_open_file = open(Monthpath,'rb')
              i = 1
              total =0
+             print()
              for _ in range(1000):
                   
               current_e = pickle.load(current_open_file)
@@ -256,6 +262,7 @@ def view_expence(login_user):
                    print("Message: {}".format(login_user.user_name))
                    print("Your expenses for {} have Under the budget Limit..".format(mstring))
                 print()
+                print("----------------------------------------------------")
                 print()
                 print(" ✔️  View Expenses successfully!  ✔️".center(100," "))
                 c = int(input("For <- Back Press 1: "))
@@ -263,6 +270,7 @@ def view_expence(login_user):
                 if c == 1:
                  os.system('cls')
                  menushow(login_user)
+                 return
                 else:
                  print()
                  os.system('cls')
@@ -315,16 +323,17 @@ def view_expence(login_user):
              ms = '0'+str(j) 
 
            if(os.path.isfile(Monthpath)):
-            print("-----------------------------------------------------------")
+            print("-".center(100,'-'))
             ms = getmonth(ms)
-            print("Month: {} {}".format(ms,m))
-            print("-----------------------------------------------------------")
+            print("\033[31mMonth: {} {}\033[0m".format(ms,m).center(100,' '))
+            print("-".center(100,'-'))
             
            
             try:
              current_open_file = open(Monthpath,'rb')
              i = 1
              total =0
+             print()
              for _ in range(1000):
                   
               current_e = pickle.load(current_open_file)
@@ -357,9 +366,11 @@ def view_expence(login_user):
             os.system('cls')
             print("There Was No Data For Given Year ❌ Try Again...")
             menushow(login_user)
+            return
 
         else: 
             print()
+            print("-----------------------------------------------------------")
             print()
             print(" ✔️  View Expenses successfully!  ✔️".center(100," "))
             c = int(input("For <- Back Press 1: "))
@@ -385,13 +396,177 @@ def view_expence(login_user):
     elif ch == 4:
        os.system('cls')
        menushow(login_user)
+       return
     
     else:
         os.system('cls')
         print()
         print("Soory! You Enter Invalid Option 😵 😵 .")
         menushow(login_user)
+        return
 
+
+def delete_expence(login_user):
+    os.system('cls')
+    print()
+    print(" Personal Expenses Managment System  ".center(100,"="))
+    print()
+
+    print()
+    print("Hy {} Ready to manage your expenses?".format(login_user.user_name))
+    print("Let's help you clean up your records..")
+    print("----------------------------------------------------")
+    print()
+
+    d = input("Please enter the date of the expense you want to Delete (DD-MM-YYYY): ")
+    print()
+    date = d.split('-')
+    file_name = 'expense_of_'+date[1]+'_'+date[2]+'.txt'
+
+    user_folder = os.getcwd()
+    user_folder = os.path.join(user_folder,'userdatabase',login_user.user_email.lower())
+    user_folder = os.path.join(user_folder,file_name)
+
+    if(os.path.isfile(user_folder)):
+       
+       ex = open(user_folder,'rb')
+
+       allexpense =[]
+
+       try:
+          for _ in range(100):
+              l = pickle.load(ex)
+              allexpense.append(l)
+
+       except EOFError:
+          ex.close()
+        
+       
+       length = len(allexpense)
+
+       filter_e = []
+       for i in range(0,length):
+          if(allexpense[i].e_date == d):
+             filter_e.append(allexpense[i])
+             
+          
+          else:
+             continue
+          
+       allexpense = [expense for expense in allexpense if expense.e_date != d]   
+          
+       l_f = len(filter_e)
+
+       print("-".center(100,'-'))
+       print("  \033[31mExpenses on {}\033[0m".format(d).center(100,' '))
+       print("-".center(100,'-'))
+
+       print()
+
+       if(l_f == 0):
+        
+        print()
+        print("No ❌ expenses found for the specified date. ")
+        print("Please check the date and try again. ")
+        print()
+        print("----------------------------------------------------")
+        print()
+        c = int(input("For <- Back Press 1: "))
+
+        if c == 1:
+         os.system('cls')
+         menushow(login_user)
+         return
+       
+       
+        else:
+         print()
+         os.system('cls')
+         print(" Personal Expenses Managment System  ".center(100,"="))
+         print()
+         print("Thank you {} for using Personal Expense Tracker. ✨ Goodbye! ✨".center(100," ").format(login_user.user_name))
+         print()
+         print("Soory! You Enter Invalid Option 😵 😵 .")
+         print("Log out .....")
+         print()
+         print()
+
+       
+       else:
+          
+          for l in range(0,l_f):
+            print("\033[31m{}.\033[0m \033[31mAmount:\033[0m {}, \033[31mCategory:\033[0m {}, \033[31mDate:\033[0m {}, \033[31mDescription:\033[0m {}".format( l+1 ,filter_e[l].e_amount, filter_e[l].e_type, filter_e[l].e_date, filter_e[l].e_des))
+            print()
+       
+       print()
+       print("----------------------------------------------------------")
+       print()
+       ch = int(input("Enter the S.No of the expense you want to delete: "))
+
+       if(ch-1 < l_f):
+          print()
+          print("Deleting the expense...")
+          del filter_e[ch-1]
+          
+       else:
+          os.system('cls')
+          print("Soory! You Enter Invalid Option 😵 😵 .")
+          menushow(login_user)
+          return
+       
+       allexpense = allexpense+filter_e
+
+       new_l = len(allexpense)
+       
+       if(new_l == 0):
+          os.remove(user_folder)
+          return
+
+       
+       ex = open(user_folder,'wb')
+      
+
+       
+
+       for i in range(0,new_l):
+          e = allexpense[i]
+          pickle.dump(e,ex)
+       
+   
+
+       print()
+       print("  ✅ Expense deleted successfully! ".center(100," "))
+       c = int(input("For <- Back Press 1: "))
+
+       if c == 1:
+         os.system('cls')
+         menushow(login_user)
+         return
+       
+       
+       else:
+         print()
+         os.system('cls')
+         print(" Personal Expenses Managment System  ".center(100,"="))
+         print()
+         print("Thank you {} for using Personal Expense Tracker. ✨ Goodbye! ✨".center(100," ").format(login_user.user_name))
+         print()
+         print("Soory! You Enter Invalid Option 😵 😵 .")
+         print("Log out .....")
+         print()
+         print()
+
+
+
+
+        
+    else:
+       os.system('cls')
+       print("No ❌ expenses found for the specified date. ")
+       print("Please check the date and try again. ")
+       menushow(login_user)
+       return
+    
     
 def logoutcode(login_user):
     os.system('cls')
@@ -404,7 +579,7 @@ def logoutcode(login_user):
     print()
     print()
 
-   
+
 
 
 def menushow(user):
@@ -435,7 +610,7 @@ def menushow(user):
         view_expence(login_user)
 
     elif user_choise == 3:
-        print("code for edit/delete expenses")
+        delete_expence(login_user)
     
     elif user_choise == 4:
         print("code for Set Monthly Buget")

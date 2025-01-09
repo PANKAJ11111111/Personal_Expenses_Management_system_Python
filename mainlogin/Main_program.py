@@ -122,6 +122,7 @@ def intro():
     print('1. Register ')
     print('2. Login ')
     print('3. Exit')
+    print()
 
     #userchoise variable store user choise
     userchoise = int(input('Enter Your Choise (1/2/3): '))
