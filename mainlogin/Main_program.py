@@ -9,39 +9,55 @@ import menu as m
 
 
 # fuction for Registration
+import os
+import pickle
+
 def register():
     os.system('cls') 
-    print(" Hello Welocome To Personal Expenses Managment System Registration ".center(100,"="))
+    print(" Hello Welocome To Personal Expenses Managment System Registration ".center(100, "="))
     print()
     
-    # create user object
+    # Create user object
     user1 = p.user()
     print()
-   
-    # Construct the file path
-    base_dir = os.path.dirname(__file__)  # Directory of the current script
+
+    # Base directory of the current script
+    base_dir = os.path.dirname(__file__)  
     
+    # Path to the main user database file
     file_path = os.path.join(base_dir, '..', 'userdatabase', 'userdata.txt')
 
-    
-    # Ensure the directory exists
-    os.makedirs(os.path.dirname(file_path), exist_ok=True)
-    
-    file = open(file_path,'ab')
+    # Check if user-specific directory exists
+    user_dir = os.path.join(base_dir, '..', 'userdatabase', user1.user_email.lower())
 
-    pickle.dump(user1,file)
-
-    file.close()
+    # If the user directory already exists
+    if os.path.isdir(user_dir):
+        os.system('cls')
+        print(f'{user1.user_name}, You are already registered. Please log in.')
+        intro()  # Call the intro function for login or other options
+        return  # Exit the register function
     
-    os.system('cls')
-    print('Registration successful!')
-    print('Now Login..')
+    # If the user directory doesn't exist
+    try:
+        # Ensure the directory for the main user database file exists
+        os.makedirs(os.path.dirname(file_path), exist_ok=True)
+        
+        # Save the new user data to the main database
+        with open(file_path, 'ab') as file:
+            pickle.dump(user1, file)
+        
+        # Create the user's specific directory
+        os.makedirs(user_dir, exist_ok=True)
+        
+        os.system('cls')
+        print('Registration successful!')
+        print('Now log in...')
+        intro()  # Proceed to the intro/login function
 
-    newdire = os.path.join(base_dir,'..','userdatabase',user1.user_email.lower())
-    
-    os.makedirs(newdire)
+    except Exception as e:
+        os.system('cls')
+        print('An error occurred during registration:', str(e))
 
-    intro()
 
 
 # fuction for Login user

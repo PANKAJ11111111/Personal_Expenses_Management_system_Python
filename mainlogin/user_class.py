@@ -3,6 +3,7 @@ class user:
     user_name = "None"
     user_email = "None"
     user_password = "none"
+    monthly_buget = []
     
     def __init__(self):
         
@@ -12,6 +13,7 @@ class user:
         self.user_salary = int(input("Enter Your Salary = "))
         self.user_Target = int(input("Enter Your Monthly Expenses Target =  "))
         self.user_mobile = int(input("Enter Your Contect Number = "))
+        self.monthly_buget = [self.user_Target] * 12
     
     def ShowUserDetail(self):
         print("User Name = ", self.user_name)
