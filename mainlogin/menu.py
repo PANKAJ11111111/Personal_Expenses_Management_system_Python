@@ -4,7 +4,6 @@ import datetime
 import pickle
 from colorama import Fore, Back, Style
 
-login_user = None
 
 
 def getmonth(num):
@@ -96,7 +95,6 @@ def add_expenses(login_user):
         print()
 
 
-
 def view_expence(login_user):
     os.system('cls')
     print()
@@ -169,6 +167,7 @@ def view_expence(login_user):
                   
 
             except EOFError:
+                current_open_file.close()
                 print("\033[31mTotal Expenses: \033[0m {}".format(total))
                 monthint = int(month)-1
                 
@@ -254,16 +253,17 @@ def view_expence(login_user):
                 print("\033[31mTotal Expenses: \033[0m {}".format(total))
                 monthint = int(l[0])
                 if(total > login_user.monthly_buget[monthint]):
-                   print("Budget: {}".format(login_user.monthly_buget[monthint]))
+                   print("Budget: {}".format(login_user.monthly_buget[monthint-1]))
                    print("Warning: {}".format(login_user.user_name))
                    print("Your expenses for {} have exceeded the budget Limit..".format(mstring))   
                 else:
-                   print("Budget: {}".format(login_user.monthly_buget[monthint]))
+                   print("Budget: {}".format(login_user.monthly_buget[monthint-1]))
                    print("Message: {}".format(login_user.user_name))
                    print("Your expenses for {} have Under the budget Limit..".format(mstring))
                 print()
                 print("----------------------------------------------------")
                 print()
+                current_open_file.close()
                 print(" ✔️  View Expenses successfully!  ✔️".center(100," "))
                 c = int(input("For <- Back Press 1: "))
 
@@ -344,6 +344,7 @@ def view_expence(login_user):
                   
 
             except EOFError:
+                current_open_file.close()
                 print("\033[31mTotal Expenses: \033[0m {}".format(total))
                 if(total > login_user.monthly_buget[j-1]):
                    print("Budget: {}".format(login_user.monthly_buget[j-1]))
@@ -519,42 +520,62 @@ def delete_expence(login_user):
        new_l = len(allexpense)
        
        if(new_l == 0):
+          ex.close()
           os.remove(user_folder)
-          return
+          print()
+          print("  ✅ Expense deleted successfully! ".center(100," "))
+          c = int(input("For <- Back Press 1: "))
 
+
+          if c == 1:
+           os.system('cls')
+           menushow(login_user)
+           return
        
-       ex = open(user_folder,'wb')
-      
-
        
+          else:
+           print()
+           os.system('cls')
+           print(" Personal Expenses Managment System  ".center(100,"="))
+           print()
+           print("Thank you {} for using Personal Expense Tracker. ✨ Goodbye! ✨".center(100," ").format (login_user.user_name))
+           print()
+           print("Soory! You Enter Invalid Option 😵 😵 .")
+           print("Log out .....")
+           print()
+           print()
+          
 
-       for i in range(0,new_l):
-          e = allexpense[i]
-          pickle.dump(e,ex)
+       else:
+        ex = open(user_folder,'wb')
+
+        for i in range(0,new_l):
+           e = allexpense[i]
+           pickle.dump(e,ex)
        
    
+        ex.close()
+        print()
+        print("  ✅ Expense deleted successfully! ".center(100," "))
+        c = int(input("For <- Back Press 1: "))
 
-       print()
-       print("  ✅ Expense deleted successfully! ".center(100," "))
-       c = int(input("For <- Back Press 1: "))
-
-       if c == 1:
-         os.system('cls')
-         menushow(login_user)
-         return
+        if c == 1:
+          os.system('cls')
+          menushow(login_user)
+          return
        
        
-       else:
-         print()
-         os.system('cls')
-         print(" Personal Expenses Managment System  ".center(100,"="))
-         print()
-         print("Thank you {} for using Personal Expense Tracker. ✨ Goodbye! ✨".center(100," ").format(login_user.user_name))
-         print()
-         print("Soory! You Enter Invalid Option 😵 😵 .")
-         print("Log out .....")
-         print()
-         print()
+        else:
+          print()
+          os.system('cls')
+          print(" Personal Expenses Managment System  ".center(100,"="))
+          print()
+          print("Thank you {} for using Personal Expense Tracker. ✨ Goodbye! ✨".center(100," ").format (login_user.user_name))
+          print()
+          print("Soory! You Enter Invalid Option 😵 😵 .")
+          print("Log out .....")
+          print()
+          print()
 
 
 
@@ -567,19 +588,129 @@ def delete_expence(login_user):
        menushow(login_user)
        return
     
+def set_monthly(login_user):
+    print(" 💫 Welocome To Personal Expenses Managment System  ".center(100,"="))
+    print()
+    print("Hi {} 🎯 ".format(login_user.user_name))
+    print("Managing your expenses is easier with a clear goal. Let's set your financial target! 🚀")
+    print()
+    print()
+    print("----------------------------------------------------")
+
+    print("Which month's target would you like to set/update? ")
+    print()
+    print("1.  January  ")
+    print("2.  February ")
+    print("3.  March ")
+    print("4.  April ")
+    print("5.  May ")
+    print("6.  June ")
+    print("7.  July")
+    print("8.  August ")
+    print("9.  September ")
+    print("10. October ")
+    print("11. November ")
+    print("12. December ")
+    print()
+
+    ch = int(input("Enter the number for the month: "))
+    print("----------------------------------------------------")
+    print()
+
+    mstr = ''
+
+    if ch == 1 :
+        mstr = 'January'
+    elif ch == 2 :
+        mstr = 'February'
+    elif ch == 3 :
+        mstr = 'March'
+    elif ch == 4 :
+        mstr = 'April'
+    elif ch == 5 :
+        mstr = 'May'
+    elif ch == 6 :
+        mstr = 'June'
+    elif ch == 7 :
+        mstr = 'July'
+    elif ch == 8 :
+        mstr = 'Augest'
+    elif ch == 9 :
+        mstr = 'September'
+    elif ch == '10':
+        mstr = 'October'
+    elif ch == '11':
+       mstr = 'November'
+    else:
+       mstr = 'December'
+
+    
+    newv = int(input("Please enter your new target for {} : ".format(mstr)))
+
+    login_user.monthly_buget[ch-1] = newv
+    print()
+
+    print("✨ Your monthly target for {} has been successfully updated to ₹ {}! 🌟 ".format(mstr,newv).center(100,' '))
+    print()
+
+
+    alluser = []
+
+    userfile = os.getcwd()
+    userfile = os.path.join(userfile,'userdatabase','userdata.txt')
+
+    file = open(userfile,'rb')
+
+    try:
+       for _ in range(1000):
+          user = pickle.load(file)
+          alluser.append(user)
+
+    except EOFError:
+       file.close()
+
+    alluser = [useri for useri in alluser if useri.user_email != login_user.user_email]
+    alluser.append(login_user)
+
+    file = open(userfile,'wb')
+
+    for i in range(0,len(alluser)):
+       useri = alluser[i]
+       pickle.dump(useri,file)
+       
+    file.close()
+    c = int(input("For <- Back Press 1: "))
+
+    if c == 1:
+      os.system('cls')
+      menushow(login_user)
+      return
+       
+       
+    else:
+     print()
+     os.system('cls')
+     print(" Personal Expenses Managment System  ".center(100,"="))
+     print()
+     print("Thank you {} for using Personal Expense Tracker. ✨ Goodbye! ✨".center(100," ").format(login_user.user_name))
+     print()
+     print("Soory! You Enter Invalid Option 😵 😵 .")
+     print("Log out .....")
+     print()
+     print()
+    
+
     
 def logoutcode(login_user):
     os.system('cls')
     print()
-    print(" Personal Expenses Managment System  ".center(100,"="))
+    print(" 💫 Welocome To Personal Expenses Managment System  ".center(100,"="))
     print()
     print("Thank you {} for using Personal Expense Tracker. ✨ Goodbye! ✨".center(100," ").format(login_user.user_name))
     print()
     print("Log Out.....")
     print()
     print()
-
-
 
 
 def menushow(user):
@@ -613,7 +744,8 @@ def menushow(user):
         delete_expence(login_user)
     
     elif user_choise == 4:
-        print("code for Set Monthly Buget")
+        os.system('cls')
+        set_monthly(login_user)
     
     elif user_choise == 5:
         print("code for export data.")
