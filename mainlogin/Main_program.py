@@ -4,6 +4,7 @@ import user_class as p
 import pickle
 import datetime
 import menu as m
+from Mail_handler.welcome_mail import send_email
 
 # here main login of code prasent
 
@@ -39,6 +40,45 @@ def register():
     
     # If the user directory doesn't exist
     try:
+        
+        sender_email = "pankajwork33@gmail.com"  # Your email
+        sender_password = "rdox ymsq xvdu bhpz"  # Your email password or app password
+        recipient_email = user1.user_email  # Recipient's email
+        subject = "Personal Expense Managment System "
+        body = """ Dear {},
+
+Welcome to the Personal Expenses Management System! 🎉
+
+We are thrilled to have you on board and excited to help you take control of your finances. With our system, you can easily track and manage your expenses, set monthly targets, and stay on top of your financial goals. 📊💸
+
+Here's a quick look at what you can do:
+
+Track your expenses by date, category, and description.
+Set monthly financial targets and get reminders.
+View detailed reports of your spending patterns.
+Easily delete or modify your expenses as you need.
+To get started, simply log in using your credentials and begin adding your expenses right away. If you need any assistance, feel free to reach out to us. We're always here to help!
+
+Once again, welcome aboard, and we wish you the best in managing your personal finances with us. 🏆
+
+Thank you for choosing us to assist you with your financial journey. 😊
+
+Best regards,
+The Personal Expenses Management Team
+Pankaj Saratkar (Head)
+""".format(user1.user_name)
+        
+       
+        e = send_email(sender_email,sender_password,recipient_email,subject,body)
+        
+        if(e == False):
+           os.system('cls')
+           print("Invalid Mail Id...")
+           print("Try Again...")
+           intro()
+           return
+
+
         # Ensure the directory for the main user database file exists
         os.makedirs(os.path.dirname(file_path), exist_ok=True)
         
@@ -49,7 +89,7 @@ def register():
         # Create the user's specific directory
         os.makedirs(user_dir, exist_ok=True)
         
-        os.system('cls')
+        os.system('cls')     
         print('Registration successful!')
         print('Now log in...')
         intro()  # Proceed to the intro/login function
