@@ -41,20 +41,11 @@ def send_email_with_attachment(sender_email, sender_password, recipient_email, s
 
         # Send the email
         server.sendmail(sender_email, recipient_email, message.as_string())
-        print("Email with attachment sent successfully!")
+        
     except Exception as e:
-        print("Error sending email:", e)
+        print()
+        
     finally:
         server.quit()  # Close the connection
 
-# Input details
-sender_email = "pankajwork33@gmail.com"  # Your email
-sender_password = "rdox ymsq xvdu bhpz"  # Your email password or app password
-recipient_email = "pankajsaratkar33@gmail.com"  # Recipient's email
-subject = "Personal Expense Managment System file"
-body = "hy"
-file_path = os.getcwd()
 
-file_path = os.path.join(file_path,'nomarl.txt') # Full path to the file to attach
-
-send_email_with_attachment(sender_email, sender_password, recipient_email, subject, body, file_path)
