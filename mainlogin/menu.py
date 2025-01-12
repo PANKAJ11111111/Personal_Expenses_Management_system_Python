@@ -614,11 +614,11 @@ def set_monthly(login_user):
         mstr = 'Augest'
     elif ch == 9 :
         mstr = 'September'
-    elif ch == '10':
+    elif ch == 10:
         mstr = 'October'
-    elif ch == '11':
+    elif ch == 11:
        mstr = 'November'
-    elif ch == '12':
+    elif ch == 12:
        mstr = 'December'
     else:
      os.system('cls')
@@ -713,13 +713,15 @@ def export_data(login_user):
         export_file.write('\n')
 
         export_file.write('\n')
-        export_file.write("Hy {} Let’s see where your money has gone!".format(login_user.user_name))
+        export_file.write('\n')
+        export_file.write("Hy {} Let’s see where your money has gone!\n".format(login_user.user_name))
         export_file.write("----------------------------------------------------")
         export_file.write('\n')
 
         
         export_file.write('\n')
         export_file.write("===== All Expenses =====")
+        export_file.write('\n')
         export_file.write('\n')
         
         for i in range(len(all_expense_file)):
@@ -730,9 +732,12 @@ def export_data(login_user):
             month_str = getmonth(month)
             year = month_sep[3].split('.')
 
-            export_file.write("-".center(100,'-'))
-            export_file.write("Month: {} {} ".format(month_str,year[0]).center(100,' '))
-            export_file.write("-".center(100,'-'))
+            export_file.write('-----------------------------------------------------------------------')
+            export_file.write('\n')
+            export_file.write('\n')
+            export_file.write("Month: {} {} \n".format(month_str,year[0]).center(100,' '))
+
+            export_file.write('\n')
             
             
             current_open_file = open(month_file,'rb')
@@ -842,7 +847,7 @@ Pankaj Saratkar """.format(login_user.user_name, 'export.txt', )
             export_file.write('\n')
 
             export_file.write('\n')
-            export_file.write("Hy {} Let’s see where your money has gone!".format(login_user.user_name))
+            export_file.write("Hy {} Let’s see where your money has gone!\n".format(login_user.user_name))
             export_file.write("----------------------------------------------------")
             export_file.write('\n')
 
@@ -850,7 +855,9 @@ Pankaj Saratkar """.format(login_user.user_name, 'export.txt', )
             export_file.write('\n')
             export_file.write("===== All Expenses Of {} =====".format(mstring))
             export_file.write('\n')
+            export_file.write('\n')
             export_file.write("-".center(100,'-'))
+            export_file.write('\n')
             
             try:
              current_open_file = open(Monthpath,'rb')
