@@ -255,7 +255,7 @@ def view_expence(login_user):
             except EOFError:
                 print("\033[31mTotal Expenses: \033[0m {}".format(total))
                 monthint = int(l[0])
-                if(total > login_user.monthly_buget[monthint]):
+                if(total > login_user.monthly_buget[monthint-1]):
                    print("Budget: {}".format(login_user.monthly_buget[monthint-1]))
                    print("Warning: {}".format(login_user.user_name))
                    print("Your expenses for {} have exceeded the budget Limit..".format(mstring))   
@@ -762,7 +762,7 @@ def export_data(login_user):
                 export_file.write("Total Expenses:  {} \n".format(total))
                 monthint = int(month)-1
                 
-                if(total > login_user.monthly_buget[monthint]):
+                if(total > login_user.monthly_buget[monthint-1]):
                    export_file.write("Budget: {}\n".format(login_user.monthly_buget[monthint]))
                    export_file.write("Warning: {}\n".format(login_user.user_name))
                    export_file.write("Your expenses for {} have exceeded the budget Limit..\n".format(month_str))   
@@ -796,6 +796,10 @@ Pankaj Saratkar """.format(login_user.user_name, 'export.txt', )
         file_add = os.getcwd()
 
         file_add = os.path.join(file_add,'userdatabase', login_user.user_email,'export.txt')
+        print()
+        print("----------------------------------------------------") 
+        print()
+        print("📂 Exporting your All data ...")
 
         send_email_with_attachment(sender_email, sender_password, recipient_email, subject, body, file_add)
 
@@ -876,7 +880,7 @@ Pankaj Saratkar """.format(login_user.user_name, 'export.txt', )
             except EOFError:
                 export_file.write("Total Expenses: {}\n".format(total))
                 monthint = int(l[0])
-                if(total > login_user.monthly_buget[monthint]):
+                if(total > login_user.monthly_buget[monthint-1]):
                    export_file.write("Budget: {}\n".format(login_user.monthly_buget[monthint-1]))
                    export_file.write("Warning: {}\n".format(login_user.user_name))
                    export_file.write("Your expenses for {} have exceeded the budget Limit..\n".format(mstring))   
@@ -906,13 +910,13 @@ Pankaj Saratkar """.format(login_user.user_name, 'export.txt', )
                 file_add = os.getcwd()
         
                 file_add = os.path.join(file_add,'userdatabase', login_user.user_email,'export.txt')
-
-                send_email_with_attachment(sender_email, sender_password, recipient_email, subject, body, file_add)
-
+                
                 print()
                 print("----------------------------------------------------") 
                 print()
                 print("📂 Exporting your All data ...")
+                send_email_with_attachment(sender_email, sender_password, recipient_email, subject, body, file_add)
+
                 print("✔ Data exported successfully! 🎉  ")
                 print("Your expenses have been Send On Your Register Mail Id....")
                 os.remove(file_add)
